@@ -5,7 +5,7 @@ pipeline {
         // Step 1
         stage('SCM') {
                 steps {
-                    git 'https://github.com/webdevprashant/jenkins-training-CI-CD-Day6.git'
+                    git 'https://github.com/saikrishna123-wo/jenkins-training-CI-CD-Day6.git'
                 }        
         }
         // Step 2
@@ -18,17 +18,17 @@ pipeline {
         // Step 3
         stage('Build docker image') {
                 steps {
-                    sh "sudo docker build -t webdevprashant/javaapp-day6:${BUILD_NUMBER} ."
+                    sh "sudo docker build -t pavangottipati/pavan_java:${BUILD_NUMBER} ."
                 }
         }
         
         // Step 4
         stage('Push docker image') {
                 steps {
-                    withCredentials([string(credentialsId: 'Docker_hub_password', variable: 'VAR_FOR_DOCKERPASS')]) {
-                    sh "sudo docker login -u webdevprashant -p $VAR_FOR_DOCKERPASS"
+                    withCredentials([string(credentialsId: 'alekhya@9020', variable: 'VAR_FOR_DOCKERPASS')]) {
+                    sh "sudo docker login -u pavangottipati -p $VAR_FOR_DOCKERPASS"
                     }
-                    sh "sudo docker push webdevprashant/javaapp-day6:${BUILD_NUMBER}"
+                    sh "sudo docker push pavangottipati/pavan_java:${BUILD_NUMBER}"
                 }
         }
         
@@ -70,7 +70,7 @@ pipeline {
                         // sh "ssh root@192.168.43.229 docker run  -d -p 8080:8080 --name myjavaapp webdevprashant/javaapp-day6:${BUILD_NUMBER}"                   
                 // }
                 sh "sudo docker rm -f myjavaappprodenv"
-                sh "sudo docker run  -d -p 1224:8080 --name myjavaappprodenv webdevprashant/javaapp-day6:${BUILD_NUMBER}"  
+                sh "sudo docker run  -d -p 1224:8080 --name myjavaappprodenv pavangottipati/pavan_java:${BUILD_NUMBER}"  
             }
         }
     }
